@@ -13,6 +13,11 @@ class Player:
         self.their_move = their_move
 
 
+class RockPlayer(Player):
+    def move(self):
+        return 'rock'
+
+
 class RandomPlayer(Player):
     def move(self):
         return random.choice(self.moves)
@@ -26,6 +31,11 @@ class ReflectPlayer(Player):
 class CyclePlayer(Player):
     def move(self):
         return self.moves[(self.moves.index(self.my_move) + 1) % 3]
+
+
+class ImitatePlayer(Player):
+    def move(self):
+        return self.their_move
 
 
 class HumanPlayer(Player):
@@ -57,6 +67,17 @@ class Game:
             self.score_player2 += 1
             return 'Player 2 wins!'
 
+    def get_num_rounds(self):
+        while True:
+            try:
+                num_rounds = int(input("How many rounds do you want to play? "))
+                if num_rounds <= 0:
+                    print("Please enter a positive number.")
+                else:
+                    return num_rounds
+            except ValueError:
+                print("Please enter a valid number.")
+
     def play_round(self, round_num):
         move1 = self.player1.move()
         move2 = self.player2.move()
@@ -75,7 +96,7 @@ class Game:
     def play_game(self):
         print("Rock, Paper, Scissors Game!\n")
 
-        num_rounds = int(input("How many rounds do you want to play? "))
+        num_rounds = self.get_num_rounds()
 
         for round_num in range(1, num_rounds + 1):
             self.play_round(round_num)
@@ -92,6 +113,8 @@ class Game:
 
 
 if __name__ == '__main__':
-    game = Game(HumanPlayer(), random.choice([RandomPlayer(),
-                                              ReflectPlayer(), CyclePlayer()]))
+    player_strategies = [RockPlayer(), RandomPlayer(), ReflectPlayer(), ImitatePlayer(), CyclePlayer()]
+    player2 = random.choice(player_strategies)
+
+    game = Game(HumanPlayer(), player2)
     game.play_game()
