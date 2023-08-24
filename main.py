@@ -69,7 +69,8 @@ class Game:
         # Update and display the scores
         self.player1.learn(move1, move2)
         self.player2.learn(move2, move1)
-        print(f"Scores: Player 1 ({self.score_player1}), Player 2 ({self.score_player2})")
+        print(f"Scores: Player 1 ({self.score_player1}),"
+              f" Player 2 ({self.score_player2})")
 
     def play_game(self):
         print("Rock, Paper, Scissors Game!\n")
@@ -80,7 +81,8 @@ class Game:
             self.play_round(round_num)
 
         print("\nGame Over!")
-        print(f"Final Scores: Player 1 ({self.score_player1}), Player 2 ({self.score_player2})")
+        print(f"Final Scores: Player 1 ({self.score_player1}),"
+              f" Player 2 ({self.score_player2})")
         if self.score_player1 > self.score_player2:
             print("Player 1 wins the game!")
         elif self.score_player2 > self.score_player1:
@@ -90,5 +92,6 @@ class Game:
 
 
 if __name__ == '__main__':
-    game = Game(HumanPlayer(), random.choice([RandomPlayer(), ReflectPlayer(), CyclePlayer()]))
+    game = Game(HumanPlayer(), random.choice([RandomPlayer(),
+                                              ReflectPlayer(), CyclePlayer()]))
     game.play_game()
